@@ -24,7 +24,9 @@
     "jest": "^24.5.0"
   },
   "dependencies": {
-    "express": "^4.16.4"
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
+    "moment": "^2.24.0"
   },
   "jest": {
     "verbose": true
