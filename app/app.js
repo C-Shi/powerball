@@ -14,9 +14,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-// config static file
-// app.use(express.static('public'));
 
+// sample page for visualization
 app.get('/sample', (req, res) => {
   res.sendFile(__dirname + '/public/sample.html');
 })
