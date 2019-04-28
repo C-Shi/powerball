@@ -34,7 +34,7 @@ const ticketHelper = {
       pick = Number(pick)
       if (i !== 5) {
         // count white abll
-        if(draw.indexOf(pick) !== 5 & draw.indexOf(pick) !== -1) {
+        if(draw.indexOf(pick) !== 5 && draw.indexOf(pick) !== -1) {
           whiteBall++
         }
       } else {

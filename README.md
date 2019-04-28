@@ -52,7 +52,7 @@ This is a back end API for checking US Powerball Ticket. This API will accept ti
 * When sending a successful request, server response with status 200 and winning information
 ![](./doc/success.png)
 
-* When sending request with incorrect picks, such as sending something different than array, sever response with status 400 and corresponding message
+* When sending request with incorrect picks, such as sending something different then array, sever response with status 400 and corresponding message
 ![](./doc/invalid_pick.png)
 
 * When sending request with invalid date type, server response with status 400 and corresponding message
