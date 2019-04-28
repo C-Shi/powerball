@@ -133,7 +133,7 @@ const ticketHelper = {
 
       picks[i].forEach((pick, j, arr) => {
         // verify if only number submited as pick info
-        if (typeof pick !== 'number') {
+        if (typeof pick !== 'number' && typeof Number(pick) !== 'number') {
           verification.result = false;
           verification.message = "Pick should only contains number";
           return ;

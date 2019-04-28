@@ -28,7 +28,7 @@ describe('Post Data To API route', () => {
     .expect(400)
     .end((err, res) => {
       if(err) done(err);
-      expect(res.body.error).toEqual('Invalid Date Format. You should submit date as YYYY-MM-DD');
+      expect(res.body.error).toEqual('Invalid Date. Accepted Date format is YYYY-MM-DD');
       done();
     })
   })
