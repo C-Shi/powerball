@@ -52,7 +52,7 @@
   <script type="text/javascript">
     $('#send').click(function(){
       $.post('http://localhost:3000/api', {
-        date: '2019-04-24',
+        date: '2019-04-25',
         picks: [
           [06, 32, 35, 36, 65, 04],
           ['6', 32, 33, 36, 65, '14']
@@ -70,6 +70,9 @@
         var sum = $('<div />');
         sum.text('Total Winning on this ticket: ' + result.totalWinning);
         $('#result').append(sum);
+      })
+      .fail(function(result) {
+        console.log(result);
       })
     })
   </script>

@@ -2,6 +2,7 @@ const axios = require('axios');
 const moment = require('moment');
 
 const ticketHelper = {
+  // method for getting draw data from public API
   getDraw: (date) => {
     drawDate = `${date}T00:00:00.000`;
     // verify if request draw date format correct
@@ -31,6 +32,7 @@ const ticketHelper = {
     })
   },
 
+  // method for finding match number for a pick set
   findMatch: (picks, draw) => {
     let whiteBall = 0;
     let redBall = 0;
@@ -53,10 +55,13 @@ const ticketHelper = {
     return [whiteBall, redBall];
   },
 
+  // method for calculate winning amount of a pick set
   calculatePrize: (match) => {
     const white = String(match[0]);
     const red = String(match[1]);
     let prize;
+    
+    // A switch-case to find out what is the winning price for this pick
     switch(`${white} ${red}`) {
       case '5 1':
         prize = 'Grand Prize';
@@ -91,12 +96,17 @@ const ticketHelper = {
     return prize;
   },
 
+  // root method for calculating all info on ticket
+  // this is the root method and will call subsequent method as needed
   ticketSummary: (ticket, draw) => {
+    // construct the structure for return object
     let cash = 0;
     const summary = {
       ticket: [],
       totalWinning: '',
     };
+
+    // calling method for each pick set to find the winning amount
     ticket.picks.forEach((set) => {
       const match = ticketHelper.findMatch(set, draw);
       const prize = ticketHelper.calculatePrize(match);

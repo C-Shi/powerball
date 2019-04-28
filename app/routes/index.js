@@ -2,7 +2,6 @@ const express = require('express')
 const { root } = require('../controllers/root')
 const { notFound } = require('../controllers/notfound')
 const ticketHelper = require('../lib/tickerHelper');
-const axios = require('axios');
 
 const router = express.Router()
 
@@ -10,7 +9,6 @@ const router = express.Router()
 router.get('/', root)
 
 router.post('/api', (req, res) => {
-  console.log(req.body);
   const ticket = req.body;
   const drawDate = ticket.date;
 
@@ -20,7 +18,7 @@ router.post('/api', (req, res) => {
     res.json(sum);
   })
   .catch(error => {
-    res.send(error)
+    res.status(400).json({error: error.message})
   })
 })
 
