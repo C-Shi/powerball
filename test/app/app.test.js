@@ -41,7 +41,6 @@ describe('Post Data To API route', () => {
     .expect(200)
     .end((err, res) => {
       if (err) done(err)
-      console.log(res.body)
       expect(res.body.totalWinning).toEqual('Grand Prize + 0')
       done()
     })

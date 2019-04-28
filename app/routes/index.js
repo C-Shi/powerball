@@ -9,7 +9,6 @@ const router = express.Router()
 router.get('/', root)
 
 router.get('/api', (req, res) => {
-  console.log(req.query)
   const ticket = req.query
   const drawDate = ticket.date
   
