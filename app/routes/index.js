@@ -1,7 +1,7 @@
 const express = require('express')
 const { root } = require('../controllers/root')
 const { notFound } = require('../controllers/notfound')
-const ticketHelper = require('../lib/tickethelper').default
+const ticketHelper = require('../lib/tickethelper')
 
 const router = express.Router()
 
