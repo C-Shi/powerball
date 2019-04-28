@@ -4,23 +4,31 @@ const moment = require('moment');
 const ticketHelper = {
   getDraw: (date) => {
     drawDate = `${date}T00:00:00.000`;
+    // verify if request draw date format correct
+    if (!moment(drawDate).isValid()) {
+      return new Promise((resolve, reject) => {
+        reject(new Error('Invalid Date Format. You should submit date as YYYY-MM-DD'));
+      })
+    }
+
+    // sending ajax request to public API to get the draw info
     return axios.get('https://data.ny.gov/resource/d6yy-54nr.json', {
       params: {
         draw_date: drawDate
       }
     })
     .then(result => {
+      // verify that the date you request does have a draw
       if(result.data && result.data.length > 0) {
         let draw = result.data[0].winning_numbers;
-        
+        // converting string type winning_number into array with number for futher calculation
+        draw = draw.split(' ');
+        draw = draw.map(number => Number(number));
+        return draw;
+      } else {
+        throw new Error('Unable to find draw info. Please verify that the day you request do have a draw');
       }
     })
-  },
-
-  ticketVerifier: (ticket) => {
-    if (!ticket.picks || ticket.picks.length === 0) {
-      throw new Error('No Pick On This Ticket');
-    }
   },
 
   findMatch: (picks, draw) => {
@@ -28,6 +36,7 @@ const ticketHelper = {
     let redBall = 0;
     picks.forEach((pick, i) => {
       // last number in the array should be considered as Red ball and calculate seperately
+      pick = Number(pick);
       if (i !== 5) {
         // count white abll
         if(draw.indexOf(pick) !== 5 & draw.indexOf(pick) !== -1) {
@@ -86,14 +95,13 @@ const ticketHelper = {
     let cash = 0;
     const summary = {
       ticket: [],
-      total_winning: '',
+      totalWinning: '',
     };
     ticket.picks.forEach((set) => {
       const match = ticketHelper.findMatch(set, draw);
-      console.log(match);
       const prize = ticketHelper.calculatePrize(match);
       if(prize === 'Grand Prize') {
-        summary.total_winning += 'Grand Prize + ';
+        summary.totalWinning += 'Grand Prize + ';
       } else if (typeof prize === 'number') {
         cash += prize;
       }
@@ -103,26 +111,9 @@ const ticketHelper = {
       })
     });
 
-    summary.total_winning += String(cash);
+    summary.totalWinning += String(cash);
     return summary;
   }
 }
 
 module.exports = ticketHelper;
-
-// const draw = [1, 2, 3, 4, 5, 6];
-// const ticket = {
-//   picks: [
-//     [1, 2, 3, 4, 5, 3],
-//     [1, 2, 3, 12 ,5, 6],
-//     [1, 2, 3, 4 ,5, 6],
-//     [1, 2, 3, 4 ,5, 6],
-//     [1, 2, 3, 4 ,5, 6],
-//     [1, 2, 3, 4 ,5, 6]
-//   ]
-// }
-
-// const sum = ticketHelper.ticketSummary(ticket, draw);
-// console.log(sum);
-
-ticketHelper.getDraw('2019-04-24')

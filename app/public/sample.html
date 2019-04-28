@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script
+  src="https://code.jquery.com/jquery-3.4.0.js"
+  integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+  <h4>Sample Ticket on 2019-04-24</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Ticket Number</th>
+        <th>Pick 1</th>
+        <th>Pick 2</th>
+        <th>Pcik 3</th>
+        <th>Pick 4</th>
+        <th>Pick 5</th>
+        <th>Powerball</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>06</td>
+        <td>32</td>
+        <td>35</td>
+        <td>36</td>
+        <td>65</td>
+        <td>04</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>07</td>
+        <td>32</td>
+        <td>33</td>
+        <td>37</td>
+        <td>65</td>
+        <td>13</td>
+      </tr>
+    </tbody>
+  </table>
+  <button id="send">Check price</button>
+  <br>
+
+  <div id="result">
+
+  </div>
+
+  <script type="text/javascript">
+    $('#send').click(function(){
+      $.post('http://localhost:3000/api', {
+        date: '2019-04-24',
+        picks: [
+          [06, 32, 35, 36, 65, 04],
+          ['6', 32, 33, 36, 65, '14']
+        ]
+      })
+      .done(function(result) {
+        result.ticket.forEach(function(set, i){
+          var ticketNum = i + 1;
+          var ticket = set.pick.join(' ');
+          var price = set.prize;
+          var div = $('<div />');
+          div.text('Pick' + ticketNum + ': ' + ticket + ' -> ' + price);
+          $('#result').append(div);
+        })
+        var sum = $('<div />');
+        sum.text('Total Winning on this ticket: ' + result.totalWinning);
+        $('#result').append(sum);
+      })
+    })
+  </script>
+</body>
+</html>
