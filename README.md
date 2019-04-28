@@ -11,15 +11,8 @@ This is a back end API for checking US Powerball Ticket. This API will accept ti
   * GET data should have a query param of `date`, in the format of `YYYY-MM-DD` which indicates the draw date
   * GET data should have a query param of `picks`, which is an array of pick, each pick should be an array of 6 numbers (5 white balls and 6th is Powerball) following the Powerball number rules. (eg: You should not include number such as 101)
   * Use the following GET data as reference
-  ```json
-  {
-    "date":"2019-04-24",
-    "picks": [
-      [ 5, 6, 7, 8, 9, 10 ],
-      [ 6, 32, 35, 36, 65, 4],
-      [ 32, 33, 36, 45, 62, 4]
-    ]
-  }
+  ```
+  http://localhost:3000/api?picks[][0]=3&picks[][0]=35&picks[][0]=36&picks[][0]=65&picks[][0]=4&picks[][1]=32&picks[][1]=33&picks[][1]=36&picks[][1]=45&picks[][1]=62&picks[][1]=4&date=2019-04-24&picks[][0]=19
   ``` 
 ### Sample Code
   * Request Via jQuery
