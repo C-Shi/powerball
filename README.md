@@ -49,6 +49,17 @@ This is a back end API for checking US Powerball Ticket. This API will accept ti
 
 ## Live Demo
 
+* When sending a successful request, server response with status 200 and winning information
+![](./doc/success.png)
+
+* When sending request with incorrect picks, such as sending something different than array, sever response with status 400 and corresponding message
+![](./doc/invalid_pick.png)
+
+* When sending request with invalid date type, server response with status 400 and corresponding message
+![](./doc/invalid_date.png)
+
+* When requested date does not have a draw, server response with status 400 and message showing that the draw date indicated on ticket is incorrect
+![](./doc/wrong_date.png)
 
 ## Prerequiste
 This app requires: 
