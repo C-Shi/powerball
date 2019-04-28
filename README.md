@@ -61,6 +61,9 @@ This is a back end API for checking US Powerball Ticket. This API will accept ti
 * When requested date does not have a draw, server response with status 400 and message showing that the draw date indicated on ticket is incorrect
 ![](./doc/wrong_date.png)
 
+* A sample live preview has been provided. Please note that this sample UI is NOT dynamic and is NOT designed for real time use. POST data cannot be changed. This page is ONLY for demonstration purpose of how the backend API work
+![](./doc/sample.gif)
+
 ## Prerequiste
 This app requires: 
 
@@ -85,10 +88,8 @@ node index.js
 App listening on port 3000
 ```
 
-To check out sample HTML demo, visit:
-```
-localhost:3000/sample
-```
+To check out sample HTML demo, visit `localhost:3000/sample`. Note that sample page is NOT for production use. POST data cannot be changed. This is only for demo purpose
+
 
 To use this API, send POST request with the data format mention above to:
 ```
