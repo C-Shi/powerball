@@ -1,5 +1,5 @@
 const app = require('../../app/app')
-const request = require('supertest');
+const request = require('supertest')
 
 test('App Environment', () => {
   expect(app.settings.env).toEqual('test')
@@ -27,9 +27,9 @@ describe('Post Data To API route', () => {
     })
     .expect(400)
     .end((err, res) => {
-      if(err) done(err);
-      expect(res.body.error).toEqual('Invalid Date. Accepted Date format is YYYY-MM-DD');
-      done();
+      if(err) done(err)
+      expect(res.body.error).toEqual('Invalid Date. Accepted Date format is YYYY-MM-DD')
+      done()
     })
   })
 
@@ -44,9 +44,9 @@ describe('Post Data To API route', () => {
     })
     .expect(200)
     .end((err, res) => {
-      if (err) done(err);
-      expect(res.body.totalWinning).toEqual('Grand Prize + 0');
-      done();
+      if (err) done(err)
+      expect(res.body.totalWinning).toEqual('Grand Prize + 0')
+      done()
     })
   })
 
@@ -62,9 +62,9 @@ describe('Post Data To API route', () => {
     })
     .expect(200)
     .end((err, res) => {
-      if (err) done(err);
-      expect(res.body.totalWinning).toEqual('Grand Prize + 100');
-      done();
+      if (err) done(err)
+      expect(res.body.totalWinning).toEqual('Grand Prize + 100')
+      done()
     })
   })
 })
