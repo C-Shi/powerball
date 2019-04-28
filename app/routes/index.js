@@ -8,8 +8,9 @@ const router = express.Router()
 // Routes
 router.get('/', root)
 
-router.post('/api', (req, res) => {
-  const ticket = req.body
+router.get('/api', (req, res) => {
+  console.log(req.query)
+  const ticket = req.query
   const drawDate = ticket.date
   
   // verify that ticket submit is correct with format and does not missing any information

@@ -97,7 +97,7 @@ const ticketHelper = {
     }
     const drawDate = ticket.date
     // verify if request draw date format correct
-    if (!moment(drawDate).isValid()) {
+    if (!drawDate || !moment(drawDate).isValid()) {
       verification.result = false
       verification.message = 'Invalid Date. Accepted Date format is YYYY-MM-DD'
       return verification
@@ -133,7 +133,7 @@ const ticketHelper = {
 
       picks[i].forEach((pick, j, arr) => {
         // verify if only number submited as pick info
-        if (typeof pick !== 'number' && typeof Number(pick) !== 'number') {
+        if (typeof pick !== 'number' && Number.isNaN(Number(pick))) {
           verification.result = false
           verification.message = "Pick should only contains number"
           return 
