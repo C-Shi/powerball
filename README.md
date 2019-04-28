@@ -54,22 +54,21 @@ This is a back end API for checking US Powerball Ticket. This API will accept ti
   var request = require("request");
   var options = { method: 'GET',
     url: 'http://localhost:3000/api',
-    qs: 
+    qs:
     { date: '2019-04-24',
       picks: [
         [ '6', '32', '35', '36', '65', '4' ],
         [ '32', '33', '36', '45', '62', '4' ]
-      ]
-    headers: 
-    { 'cache-control': 'no-cache',
-      Connection: 'keep-alive',
-      'accept-encoding': 'gzip, deflate',
-      Host: 'localhost:3000',
-      'Postman-Token': '80829e16-695a-4803-8f1c-549f658311d0,d0ad3f9f-3534-45de-8f8b-d158c3c01aa7',
-      'Cache-Control': 'no-cache',
-      Accept: '*/*',
-      'User-Agent': 'PostmanRuntime/7.11.0',
-      'Content-Type': 'application/x-www-form-urlencoded' } };
+      ],
+      headers:
+      { 'cache-control': 'no-cache',
+        Connection: 'keep-alive',
+        'accept-encoding': 'gzip, deflate',
+        Host: 'localhost:3000',
+        Accept: '*/*',
+        'User-Agent': 'PostmanRuntime/7.11.0',
+        'Content-Type': 'application/x-www-form-urlencoded' }
+      }};
 
   request(options, function (error, response, body) {
     if (error) throw new Error(error);
