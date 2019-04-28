@@ -11,6 +11,11 @@ router.get('/', root)
 router.post('/api', (req, res) => {
   const ticket = req.body;
   const drawDate = ticket.date;
+  
+  const ticketVerified = ticketHelper.ticketVerifier(ticket);
+  if (!ticketVerified.result) {
+    return res.status(400).json({ 'error': ticketVerified.message });
+  }
 
   ticketHelper.getDraw(drawDate)
   .then(draw => {

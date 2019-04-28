@@ -5,13 +5,6 @@ const ticketHelper = {
   // method for getting draw data from public API
   getDraw: (date) => {
     drawDate = `${date}T00:00:00.000`;
-    // verify if request draw date format correct
-    if (!moment(drawDate).isValid()) {
-      return new Promise((resolve, reject) => {
-        reject(new Error('Invalid Date Format. You should submit date as YYYY-MM-DD'));
-      })
-    }
-
     // sending ajax request to public API to get the draw info
     return axios.get('https://data.ny.gov/resource/d6yy-54nr.json', {
       params: {
@@ -96,6 +89,76 @@ const ticketHelper = {
     return prize;
   },
 
+  ticketVerifier: (ticket) => {
+    const picks = ticket.picks;
+    const verification = {
+      result: true,
+      message: ""
+    }
+    const drawDate = ticket.date;
+    // verify if request draw date format correct
+    if (!moment(drawDate).isValid()) {
+      verification.result = false;
+      verification.message = 'Invalid Date. Accepted Date format is YYYY-MM-DD';
+      return verification;
+    }
+
+    // verify if ticket has a picks property
+    if (!picks) {
+      verification.result = false;
+      verification.message = "Missing Ticket Propery Picks";
+      return verification;
+    }
+
+    // verify if the ticket picks is array type
+    if (!Array.isArray(picks)) {
+      verification.result = false;
+      verification.message = 'Invalid Data Type. Picks should be array';
+      return verification;
+    }
+
+    // verifying each pick
+    for(let i = 0; i < picks.length; i++) {
+      // verify if each pick is array
+      if (!Array.isArray(picks[i])) {
+        verification.result = false;
+        verification.message = 'Invalid Data Type. Picks should be array';
+        break;
+      // verify if each pick contains 6 elements
+      } else if (picks[i].length !== 6) {
+        verification.result = false;
+        verification.message = "Invalid Pick. Each pick should contains 6 Number";
+        break;
+      }
+
+      picks[i].forEach((pick, j, arr) => {
+        // verify if only number submited as pick info
+        if (typeof pick !== 'number') {
+          verification.result = false;
+          verification.message = "Pick should only contains number";
+          return ;
+        }
+
+        // seperate regular ball with powerball
+        // Not last element indicate that this is a regular ball
+        if(arr[j + 1]) {
+          // verify white ball range
+          if (pick > 69 || pick < 1) {
+            verification.result = false;
+            verification.message = "Each Regular ball should between 1 and 69";
+          }
+        // verify powerball range
+        } else {
+          if (pick > 26 || pick < 1) {
+            verification.result = false;
+            verification.message = "Invalid Pick. Powerball should between 1 and 26";
+          }
+        }
+      })
+    }
+    return verification;
+  },
+
   // root method for calculating all info on ticket
   // this is the root method and will call subsequent method as needed
   ticketSummary: (ticket, draw) => {
@@ -108,13 +171,18 @@ const ticketHelper = {
 
     // calling method for each pick set to find the winning amount
     ticket.picks.forEach((set) => {
+      // calling method to check match and prize for each pick
       const match = ticketHelper.findMatch(set, draw);
       const prize = ticketHelper.calculatePrize(match);
+
+      // construct summary info for total winning prize
       if(prize === 'Grand Prize') {
         summary.totalWinning += 'Grand Prize + ';
       } else if (typeof prize === 'number') {
         cash += prize;
       }
+
+      // construct detail info of winning for each pick
       summary.ticket.push({
         prize,
         pick: set,
